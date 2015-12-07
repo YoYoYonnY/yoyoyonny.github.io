@@ -1,0 +1,15 @@
+{ "folders":
+  [ { "name": "Schakeling"
+    , "path": "."
+    , "folder_exclude_patterns": [".sass-cache"]
+    , "file_exclude_patterns": ["project.sublime-project"] }
+  , { "name": "Source Files"
+    , "path": "src" }
+  , { "name": "Documentation"
+    , "path": "docs"
+    , "file_exclude_patterns": ["*.css"]
+    , "folder_exclude_patterns": ["public"] }
+  , { "name": "Binairies"
+    , "path": "bin"
+    , "file_exclude_patterns": ["*.css.map"] }
+  ] }

@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%; }
+
+.button {
+  background: #CCC;
+  outline: none;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  padding: 15px;
+  margin: 5px; }
+  .button:hover {
+    background: #BBB; }
+  .button:active {
+    background: #AAA; }
+
+.switch {
+  background: #CCC;
+  outline: none;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  padding: 15px;
+  margin: 5px; }
+  .switch:hover {
+    background: #BBB; }
+  .switch:active {
+    background: #AAA; }
+  .switch.active {
+    background: #888; }
+
+.watching {
+  background: #CCC;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  padding: 15px;
+  margin: 5px; }
+
+.start {
+  background: #CCC;
+  outline: none;
+  border: 1px solid black;
+  padding: 15px;
+  margin: 5px; }
+  .start:hover {
+    background: #BBB; }
+  .start:active {
+    background: #AAA; }
+
+.led {
+  display: inline-block;
+  background: #CCC;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  padding: 15px;
+  margin: 5px; }
+  .led.active {
+    background: #ec1313; }
+
+.lamp {
+  background: #CCC;
+  border: 1px solid black;
+  box-shadow: 5px 5px gray;
+  padding: 15px;
+  margin: 5px; }
+  .lamp.active {
+    background: #e5e619; }
+
+/*# sourceMappingURL=style.css.map */

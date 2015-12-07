@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>PO Pincode</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="po-pincode">PO Pincode</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="componenten">Componenten</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Voor dit programma om uitvoerbaar te zijn zullen er een aantal componenten
+ aan het programma toegevoegd worden.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>components = [] <span class="hljs-comment"># Lijst met alle componenten die ooit gecreeërd zijn</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Component</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(@name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+        components.push <span class="hljs-keyword">this</span>
+    setState: <span class="hljs-function">-&gt;</span> <span class="hljs-literal">no</span>
+    getState: <span class="hljs-function">-&gt;</span> <span class="hljs-literal">off</span>
+    setName: <span class="hljs-function"><span class="hljs-params">(name)</span> -&gt;</span>
+        @name = name
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+    getName: <span class="hljs-function">-&gt;</span> @name
+    simulate: <span class="hljs-function">-&gt;</span>
+    copy: <span class="hljs-function"><span class="hljs-params">(name)</span>  -&gt;</span>
+        copy = <span class="hljs-keyword">new</span> Component @name
+        copy.name ?= name
+        copy.title ?= @title
+        copy.getState = @getState
+        copy.setState = @setState
+        copy.getName = <span class="hljs-function">-&gt;</span> @name
+        copy.setName = <span class="hljs-function">-&gt;</span> <span class="hljs-literal">no</span>
+        copy.getTitle = <span class="hljs-function">-&gt;</span> @title
+        copy.setTitle = <span class="hljs-function">-&gt;</span> <span class="hljs-literal">no</span>
+        <span class="hljs-keyword">return</span> copy
+    log: <span class="hljs-function"><span class="hljs-params">(output=<span class="hljs-built_in">console</span>)</span>  -&gt;</span>
+        name = @getTitle?() <span class="hljs-keyword">or</span> @getName?() <span class="hljs-keyword">or</span> <span class="hljs-string">"unnamed"</span>
+        state = <span class="hljs-keyword">if</span> @getState() <span class="hljs-keyword">then</span> <span class="hljs-string">"on"</span> <span class="hljs-keyword">else</span> <span class="hljs-string">"off"</span>
+        output.log <span class="hljs-string">"<span class="hljs-subst">#{name}</span>: <span class="hljs-subst">#{state}</span>"</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BitHolder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        @setState = <span class="hljs-function"><span class="hljs-params">(_state)</span> -&gt;</span>
+            state = stateof _state
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">yes</span>
+        @getState = <span class="hljs-function">-&gt;</span> state
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pressable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+    press: <span class="hljs-function">-&gt;</span>
+    release: <span class="hljs-function">-&gt;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Button</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Pressable</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>, @title=name)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        releaseDelay = <span class="hljs-number">0</span>
+        @press = <span class="hljs-function"><span class="hljs-params">(steps=<span class="hljs-number">0</span>)</span> -&gt;</span>
+            state = <span class="hljs-literal">on</span>
+            releaseDelay = steps + <span class="hljs-number">1</span>
+        @release = <span class="hljs-function">-&gt;</span>
+            state = <span class="hljs-literal">off</span>
+        @setTitle = <span class="hljs-function"><span class="hljs-params">(_title)</span> -&gt;</span>
+            @title = _title
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+        @getTitle = <span class="hljs-function">-&gt;</span> @title
+        @getState = <span class="hljs-function">-&gt;</span> state
+        @simulate = <span class="hljs-function">-&gt;</span>
+            <span class="hljs-keyword">if</span> releaseDelay &gt; <span class="hljs-number">0</span>
+                releaseDelay--
+                <span class="hljs-keyword">if</span> releaseDelay <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
+                    state = <span class="hljs-literal">off</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Switch</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Pressable</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>, @title=name)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        pressed = <span class="hljs-literal">no</span>
+        releaseDelay = <span class="hljs-number">0</span>
+        @press = <span class="hljs-function"><span class="hljs-params">(steps=<span class="hljs-number">0</span>)</span> -&gt;</span>
+            state = <span class="hljs-keyword">not</span> state <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> pressed
+            pressed = <span class="hljs-literal">yes</span>
+            releaseDelay = steps
+        @release = <span class="hljs-function">-&gt;</span>
+            pressed = <span class="hljs-literal">no</span>
+        @setTitle = <span class="hljs-function"><span class="hljs-params">(_title)</span> -&gt;</span>
+            @title = _title
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+        @getTitle = <span class="hljs-function">-&gt;</span> @title
+        @getState = <span class="hljs-function">-&gt;</span> state
+        @simulate = <span class="hljs-function">-&gt;</span>
+            <span class="hljs-keyword">if</span> releaseDelay &gt; <span class="hljs-number">0</span>
+                releaseDelay--
+                <span class="hljs-keyword">if</span> releaseDelay <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
+                    pressed = <span class="hljs-literal">no</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LED</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BitHolder</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>, @title=name)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        @set = <span class="hljs-literal">false</span>
+        @setTitle = <span class="hljs-function"><span class="hljs-params">(_title)</span> -&gt;</span> @title = _title
+        @getTitle = <span class="hljs-function">-&gt;</span> @title
+        @setState = <span class="hljs-function"><span class="hljs-params">(_state)</span> -&gt;</span>
+            state = stateof _state
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">yes</span>
+        @getState = <span class="hljs-function">-&gt;</span> state
+        @simulate = <span class="hljs-function">-&gt;</span>
+            <span class="hljs-keyword">if</span> stateof @set
+                state = <span class="hljs-literal">on</span>
+            <span class="hljs-keyword">else</span>
+                state = <span class="hljs-literal">off</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Lamp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BitHolder</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>, @title=name)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        @set = <span class="hljs-literal">false</span>
+        @setTitle = <span class="hljs-function"><span class="hljs-params">(_title)</span> -&gt;</span> @title = _title
+        @getTitle = <span class="hljs-function">-&gt;</span> @title
+        @setState = <span class="hljs-function"><span class="hljs-params">(_state)</span> -&gt;</span>
+            state = stateof _state
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">yes</span>
+        @getState = <span class="hljs-function">-&gt;</span> state
+        @simulate = <span class="hljs-function">-&gt;</span>
+            <span class="hljs-keyword">if</span> stateof @set
+                state = <span class="hljs-literal">on</span>
+            <span class="hljs-keyword">else</span>
+                state = <span class="hljs-literal">off</span>
+    log: <span class="hljs-function"><span class="hljs-params">(output=<span class="hljs-built_in">console</span>)</span>  -&gt;</span>
+        name = @title <span class="hljs-keyword">or</span> <span class="hljs-string">"unnamed"</span>
+        state = <span class="hljs-keyword">if</span> @getState() <span class="hljs-keyword">then</span> <span class="hljs-string">"on"</span> <span class="hljs-keyword">else</span> <span class="hljs-string">"off"</span>
+        output.log <span class="hljs-string">"<span class="hljs-subst">#{name}</span>: <span class="hljs-subst">#{state}</span>"</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PulseCounter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>
+<span class="hljs-function">    <span class="hljs-title">getbit</span> = <span class="hljs-params">(number, bit)</span> -&gt;</span> (number &amp; ( <span class="hljs-number">1</span> &lt;&lt; bit )) &gt;&gt; bit
+<span class="hljs-function">    <span class="hljs-title">regenerate</span> = <span class="hljs-params">(self, number)</span> -&gt;</span>
+        self[<span class="hljs-number">0</span>].setState(getbit(number, <span class="hljs-number">0</span>))
+        self[<span class="hljs-number">1</span>].setState(getbit(number, <span class="hljs-number">1</span>))
+        self[<span class="hljs-number">2</span>].setState(getbit(number, <span class="hljs-number">2</span>))
+        self[<span class="hljs-number">3</span>].setState(getbit(number, <span class="hljs-number">3</span>))
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        updating = <span class="hljs-literal">no</span>
+        number = <span class="hljs-number">0</span>
+        @[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> BitHolder (name + <span class="hljs-string">"[0]"</span>)
+        @[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> BitHolder (name + <span class="hljs-string">"[1]"</span>)
+        @[<span class="hljs-number">2</span>] = <span class="hljs-keyword">new</span> BitHolder (name + <span class="hljs-string">"[2]"</span>)
+        @[<span class="hljs-number">3</span>] = <span class="hljs-keyword">new</span> BitHolder (name + <span class="hljs-string">"[3]"</span>)
+        @set = <span class="hljs-literal">null</span>
+        @reset = <span class="hljs-literal">null</span>
+        @enabled = <span class="hljs-literal">yes</span>
+        @simulate = <span class="hljs-function">=&gt;</span>
+            <span class="hljs-keyword">if</span> stateof @enabled
+                <span class="hljs-keyword">if</span> stateof @set
+                    <span class="hljs-keyword">if</span> updating
+                        updating = <span class="hljs-literal">no</span>
+                        regenerate(<span class="hljs-keyword">this</span>, ++number)
+                <span class="hljs-keyword">else</span>
+                    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> updating
+                        updating = <span class="hljs-literal">yes</span>
+                <span class="hljs-keyword">if</span> stateof @reset
+                    regenerate(<span class="hljs-keyword">this</span>, number = <span class="hljs-number">0</span>)
+                    updating = <span class="hljs-literal">no</span>
+        @log = <span class="hljs-function"><span class="hljs-params">(<span class="hljs-built_in">console</span>=<span class="hljs-built_in">console</span>)</span> -&gt;</span>
+            name = @getName() <span class="hljs-keyword">or</span> <span class="hljs-string">"unnamed"</span>
+            bits = (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">3</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>) +
+                   (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">2</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>) +
+                   (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">1</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>) +
+                   (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">0</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>)
+            number = ( (stateof @[<span class="hljs-number">0</span>]) * <span class="hljs-number">1</span> +
+                       (stateof @[<span class="hljs-number">1</span>]) * <span class="hljs-number">2</span> +
+                       (stateof @[<span class="hljs-number">2</span>]) * <span class="hljs-number">4</span> +
+                       (stateof @[<span class="hljs-number">3</span>]) * <span class="hljs-number">8</span> )
+            state = <span class="hljs-string">"<span class="hljs-subst">#{number}</span> (<span class="hljs-subst">#{bits}</span>)"</span>
+            <span class="hljs-built_in">console</span>.log <span class="hljs-string">"<span class="hljs-subst">#{name}</span>: <span class="hljs-subst">#{state}</span>"</span>
+    copy: <span class="hljs-function"><span class="hljs-params">(name)</span> =&gt;</span>
+        copy = <span class="hljs-keyword">new</span> PulseCounter @name
+        copy.name = name <span class="hljs-keyword">if</span> name?
+        copy.getName = <span class="hljs-function">-&gt;</span> @name
+        copy.setName = <span class="hljs-function">-&gt;</span> <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span><span class="hljs-number">.3</span>]
+            copy[n] = @[n].copy(copy.name + <span class="hljs-string">'['</span> + name + <span class="hljs-string">']'</span>)
+        <span class="hljs-keyword">return</span> copy
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PulseGenerator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BitHolder</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>, onTime=<span class="hljs-number">1</span>, offTime=<span class="hljs-number">1</span>)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        time = <span class="hljs-number">0</span>
+        @getState = <span class="hljs-function">-&gt;</span> state
+        @setState = <span class="hljs-function"><span class="hljs-params">(_state)</span> -&gt;</span>
+            state = _state
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">yes</span>
+        @simulate = <span class="hljs-function">-&gt;</span>
+            <span class="hljs-keyword">if</span> time &gt; <span class="hljs-number">0</span>
+                time--
+                <span class="hljs-keyword">if</span> time <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
+                    <span class="hljs-keyword">if</span> state
+                        time = offTime
+                    <span class="hljs-keyword">else</span>
+                        time = onTime
+                    state = <span class="hljs-keyword">not</span> state
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MemoryCell</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BitHolder</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        state = <span class="hljs-literal">off</span>
+        @set = <span class="hljs-literal">null</span>
+        @reset = <span class="hljs-literal">null</span>
+        @setState = <span class="hljs-function"><span class="hljs-params">(_state)</span> -&gt;</span>
+            state = _state
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">yes</span>
+        @getState = <span class="hljs-function">-&gt;</span> state
+        @simulate = <span class="hljs-function">-&gt;</span>
+            <span class="hljs-keyword">if</span> stateof @set
+                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> stateof @reset
+                    state = <span class="hljs-literal">on</span>
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> stateof @reset
+                state = <span class="hljs-literal">off</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MemoryCell_4bit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span></span>
+    constructor: <span class="hljs-function"><span class="hljs-params">(name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+        <span class="hljs-keyword">super</span>(name)
+        @[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> MemoryCell name+<span class="hljs-string">"[0]"</span>
+        @[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> MemoryCell name+<span class="hljs-string">"[1]"</span>
+        @[<span class="hljs-number">2</span>] = <span class="hljs-keyword">new</span> MemoryCell name+<span class="hljs-string">"[2]"</span>
+        @[<span class="hljs-number">3</span>] = <span class="hljs-keyword">new</span> MemoryCell name+<span class="hljs-string">"[3]"</span>
+    log: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-built_in">console</span>=<span class="hljs-built_in">console</span>)</span> -&gt;</span>
+        name = @getName() <span class="hljs-keyword">or</span> <span class="hljs-string">"unnamed"</span>
+        bits = (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">3</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>) +
+               (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">2</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>) +
+               (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">1</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>) +
+               (<span class="hljs-keyword">if</span> stateof @[<span class="hljs-number">0</span>] <span class="hljs-keyword">then</span> <span class="hljs-string">'1'</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>)
+        number = ( (stateof @[<span class="hljs-number">0</span>]) * <span class="hljs-number">1</span> +
+                   (stateof @[<span class="hljs-number">1</span>]) * <span class="hljs-number">2</span> +
+                   (stateof @[<span class="hljs-number">2</span>]) * <span class="hljs-number">4</span> +
+                   (stateof @[<span class="hljs-number">3</span>]) * <span class="hljs-number">8</span> )
+        state = <span class="hljs-string">"<span class="hljs-subst">#{number}</span> (<span class="hljs-subst">#{bits}</span>)"</span>
+        <span class="hljs-built_in">console</span>.log <span class="hljs-string">"<span class="hljs-subst">#{name}</span>: <span class="hljs-subst">#{state}</span>"</span>
+    copy: <span class="hljs-function"><span class="hljs-params">(name)</span> -&gt;</span>
+        copy = <span class="hljs-keyword">new</span> MemoryCell_4bit @name
+        copy.name = name <span class="hljs-keyword">if</span> name?
+        copy.getName = <span class="hljs-function">-&gt;</span> @name
+        copy.setName = <span class="hljs-function">-&gt;</span> <span class="hljs-literal">false</span>
+        <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> [<span class="hljs-number">0.</span><span class="hljs-number">.3</span>]
+            copy[n] = @[n].copy(copy.name + <span class="hljs-string">'['</span> + name + <span class="hljs-string">']'</span>)
+        <span class="hljs-keyword">return</span> copy
+<span class="hljs-function">
+<span class="hljs-title">generateLogicCircuit</span> = <span class="hljs-params">(name, getState)</span> -&gt;</span>
+    component = <span class="hljs-keyword">new</span> Component name
+    component.getState = <span class="hljs-function">-&gt;</span> stateof getState()
+    <span class="hljs-keyword">return</span> component</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2 id="stateof">STATEOF</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><code>stateof</code> is een belangerijke functie. Met <code>stateof</code> kunnen we de waarde van
+ een component met één uitvoer lezen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">stateof</span> = <span class="hljs-params">(component)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> component <span class="hljs-keyword">instanceof</span> Component
+        component.getState()
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span> component <span class="hljs-keyword">is</span> <span class="hljs-string">"number"</span>
+        component <span class="hljs-keyword">isnt</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span> component <span class="hljs-keyword">is</span> <span class="hljs-string">"boolean"</span>
+        component
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-literal">off</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h2 id="simuleren">Simuleren</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>We zullen ook een aantal functies voor simuleren definiëren:</p>
+<p>Watching is een lijst met componenten die we aan het bekijken zijn.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>watching = []</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Debugging is een lijst met componenten die we aan het debugggen zijn.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>debugging = []</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Press is een functie die het indrukken van een knop simuleert.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">press</span> = <span class="hljs-params">(component, steps=<span class="hljs-number">0</span>)</span> -&gt;</span> component.press steps</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Release is een functie die het loslaten van een knop simuleert.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">release</span> = <span class="hljs-params">(component)</span> -&gt;</span> component.release()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Watch is een functie die een component op de kijklijst plaatst.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">watch</span> = <span class="hljs-params">(component, name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+    watching.push component.copy name</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Unwatch is een functie die een component van de kijklijst haalt.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">unwatch</span> = <span class="hljs-params">(component)</span> -&gt;</span>
+    watching = (x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> watching <span class="hljs-keyword">when</span> x <span class="hljs-keyword">isnt</span> component)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Debug is een functie die een component op de debuglijst plaatst.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">debug</span> = <span class="hljs-params">(component, name=<span class="hljs-literal">null</span>)</span> -&gt;</span>
+    debugging.push component.copy name</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Undebug is een functie die een component van de debuglijst haalt.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">undebug</span> = <span class="hljs-params">(component)</span> -&gt;</span>
+    debugging = (x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> debugging <span class="hljs-keyword">when</span> x <span class="hljs-keyword">isnt</span> component)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Log is een functie die de gegevens van alle componenten naar de Console
+zal schrijven.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">log</span> = -&gt;</span>
+    <span class="hljs-keyword">for</span> component <span class="hljs-keyword">in</span> watching
+        component.log(<span class="hljs-built_in">console</span>)
+    <span class="hljs-keyword">return</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Simulate is een functie die de simulatie voor een aantal stappen
+simuleert.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">simulate</span> = <span class="hljs-params">(steps=<span class="hljs-number">1</span>)</span> -&gt;</span>
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> [<span class="hljs-number">1.</span>.steps]
+        <span class="hljs-keyword">for</span> component <span class="hljs-keyword">in</span> components
+            component.simulate()
+            component.log() <span class="hljs-keyword">if</span> component <span class="hljs-keyword">in</span> debugging
+    <span class="hljs-keyword">return</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Time</span></span>
+    @MILISECOND: <span class="hljs-number">1</span>
+    @SECOND: <span class="hljs-number">1000</span>
+    @MINUTE: <span class="hljs-number">60000</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <h2 id="logische-poorten">Logische poorten</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>De volgende logische poorten moeten gedefiniërd worden:</p>
+<p>Een OF-poort geeft een hoog signaal als er minstens een input hoog is.
+(er is een <code>on</code> in de argumenten)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">OR</span> = <span class="hljs-params">(args...)</span> -&gt;</span> generateLogicCircuit <span class="hljs-string">"OR"</span>, <span class="hljs-function">-&gt;</span>
+        _args = (stateof arg <span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> args)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">on</span> <span class="hljs-keyword">in</span> _args</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Een EN-poort geeft een hoog signaal als er geen input laag is.
+(er is geen <code>off</code> in de argumenten)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">AND</span> = <span class="hljs-params">(args...)</span> -&gt;</span> generateLogicCircuit <span class="hljs-string">"AND"</span>, <span class="hljs-function">-&gt;</span>
+    _args = (stateof arg <span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> args)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> (<span class="hljs-literal">off</span> <span class="hljs-keyword">in</span> _args)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Een XOR-poort geeft een hoog signaal als het aantal inputs dat hoog is
+ gelijk is aan een.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">XOR</span> = <span class="hljs-params">(args...)</span> -&gt;</span> generateLogicCircuit <span class="hljs-string">"XOR"</span>, <span class="hljs-function">-&gt;</span>
+    _args = (stateof arg <span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> args)
+    <span class="hljs-keyword">return</span> (arg <span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> _args <span class="hljs-keyword">when</span> arg <span class="hljs-keyword">is</span> <span class="hljs-literal">on</span>).length <span class="hljs-keyword">is</span> <span class="hljs-number">1</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Een NIET-poort draait zijn argument om.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">NOT</span> = <span class="hljs-params">(arg)</span> -&gt;</span> generateLogicCircuit <span class="hljs-string">"NOT"</span>, <span class="hljs-function">-&gt;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> stateof arg</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>De volgende logische poorten kunnen algebratisch gegenereerd worden:</p>
+<p>Een NAND(…) poort is gelijk aan een NOT(AND(…)) poort</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">NAND</span> = <span class="hljs-params">(args...)</span> -&gt;</span> generateLogicCircuit <span class="hljs-string">"NAND"</span>, <span class="hljs-function">-&gt;</span> NOT AND args...</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Een NOR(…) poort is gelijk aan een NOT(OR(…)) poort</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">NOR</span> = <span class="hljs-params">(args...)</span> -&gt;</span> generateLogicCircuit <span class="hljs-string">"NOR"</span>, <span class="hljs-function">-&gt;</span> NOT OR args...</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <h2 id="het-programma-starten">Het programma starten</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Imports slaat alle componenten op onder de juiste naam.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>imports = {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Run start de simulatie, als die bestaat.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">run</span> = -&gt;</span>
+    watching = []
+    debugging = []
+    main?(imports)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Start start het programma.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">start</span> = -&gt;</span>
+    init?()
+    <span class="hljs-keyword">for</span> component <span class="hljs-keyword">in</span> components
+        imports[component.name] = component
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">window</span>? <span class="hljs-keyword">and</span> <span class="hljs-built_in">document</span>? <span class="hljs-comment"># De code wordt in de browser uitgevoert</span>
+        addEventListener <span class="hljs-string">"DOMContentLoaded"</span>, <span class="hljs-function">-&gt;</span>
+            buttonsDiv  = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+            switchesDiv = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+            lampsDiv    = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+            ledsDiv     = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+            watchingDiv = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+            watchingDiv.className = <span class="hljs-string">"watching"</span>
+            buttons  = []
+            switches = []
+            lamps    = []
+            leds     = []
+<span class="hljs-function">            <span class="hljs-title">updateSwitches</span> = -&gt;</span>
+                <span class="hljs-keyword">for</span> _switch <span class="hljs-keyword">in</span> switches
+                    [name, div] = _switch
+                    active = imports[name].getState()
+                    active = <span class="hljs-keyword">if</span> active <span class="hljs-keyword">then</span><span class="hljs-string">"active"</span> <span class="hljs-keyword">else</span> <span class="hljs-string">""</span>
+                    div.className = <span class="hljs-string">"switch "</span> + active
+<span class="hljs-function">            <span class="hljs-title">updateLamps</span> = -&gt;</span>
+                <span class="hljs-keyword">for</span> lamp <span class="hljs-keyword">in</span> lamps
+                    [name, div] = lamp
+                    active = imports[name].getState()
+                    active = <span class="hljs-keyword">if</span> active <span class="hljs-keyword">then</span><span class="hljs-string">"active"</span> <span class="hljs-keyword">else</span> <span class="hljs-string">""</span>
+                    div.className = <span class="hljs-string">"lamp "</span> + active
+<span class="hljs-function">            <span class="hljs-title">updateLeds</span> = -&gt;</span>
+                <span class="hljs-keyword">for</span> led <span class="hljs-keyword">in</span> leds
+                    [name, div] = led
+                    active = imports[name].getState()
+                    active = <span class="hljs-keyword">if</span> active <span class="hljs-keyword">then</span> <span class="hljs-string">"active"</span> <span class="hljs-keyword">else</span> <span class="hljs-string">""</span>
+                    div.className = <span class="hljs-string">"led "</span> + active
+<span class="hljs-function">            <span class="hljs-title">updateWatchList</span> = -&gt;</span>
+                <span class="hljs-keyword">while</span> watchingDiv.firstChild
+                    watchingDiv.removeChild watchingDiv.firstChild
+                <span class="hljs-keyword">for</span> component <span class="hljs-keyword">in</span> watching
+                    text = <span class="hljs-string">""</span>
+                    _console =
+                        log: <span class="hljs-function"><span class="hljs-params">(args...)</span> -&gt;</span>
+                            text += arg <span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> args
+                        debug: <span class="hljs-function">-&gt;</span>
+                        error: <span class="hljs-function">-&gt;</span>
+                        clear: <span class="hljs-function">-&gt;</span>
+                    component.log(_console)
+                    div = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+                    div.appendChild <span class="hljs-built_in">document</span>.createTextNode text
+                    watchingDiv.appendChild div
+<span class="hljs-function">
+            <span class="hljs-title">updateComponents</span> = -&gt;</span>
+                updateSwitches()
+                updateLamps()
+                updateLeds()
+                updateWatchList()
+            buttons.className = <span class="hljs-string">"buttons"</span>
+            lamps.className   = <span class="hljs-string">"lamps"</span>
+            leds.className    = <span class="hljs-string">"leds"</span>
+            <span class="hljs-keyword">for</span> component <span class="hljs-keyword">in</span> components
+                <span class="hljs-keyword">do</span> (component) -&gt;
+                    <span class="hljs-keyword">if</span> component <span class="hljs-keyword">instanceof</span> Button
+                        button = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'button'</span>
+                        button.className = <span class="hljs-string">"button"</span>
+                        button.appendChild <span class="hljs-built_in">document</span>.createTextNode component.title
+                        button.addEventListener <span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-params">(e)</span> =&gt;</span>
+                            press component, <span class="hljs-number">1</span>
+                            simulate <span class="hljs-number">10</span>
+                            updateComponents()
+                        buttons.push [component.name, button]
+                        buttonsDiv.appendChild button
+                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> component <span class="hljs-keyword">instanceof</span> Switch
+                        _switch = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'button'</span>
+                        _switch.className = <span class="hljs-string">"switch"</span>
+                        _switch.appendChild <span class="hljs-built_in">document</span>.createTextNode component.title
+                        _switch.addEventListener <span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-params">(e)</span> =&gt;</span>
+                            press component, <span class="hljs-number">1</span>
+                            simulate <span class="hljs-number">10</span>
+                            updateComponents()
+                        switches.push [component.name, _switch]
+                        switchesDiv.appendChild _switch
+                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> component <span class="hljs-keyword">instanceof</span> Lamp
+                        lamp = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+                        lamp.className = <span class="hljs-string">"lamp"</span>
+                        lamp.appendChild <span class="hljs-built_in">document</span>.createTextNode component.title
+                        lamps.push [component.name, lamp]
+                        lampsDiv.appendChild lamp
+                    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> component <span class="hljs-keyword">instanceof</span> LED
+                        led = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'div'</span>
+                        led.className = <span class="hljs-string">"led"</span>
+                        led.appendChild <span class="hljs-built_in">document</span>.createTextNode component.title
+                        leds.push [component.name, led]
+                        ledsDiv.appendChild led
+            run()
+            updateComponents()
+            start = <span class="hljs-built_in">document</span>.createElement <span class="hljs-string">'button'</span>
+            start.className = <span class="hljs-string">"start"</span>
+            start.appendChild <span class="hljs-built_in">document</span>.createTextNode <span class="hljs-string">"Reset Simulation"</span>
+            start.addEventListener <span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-params">(e)</span> =&gt;</span>
+                run()
+                updateComponents()
+
+            <span class="hljs-built_in">document</span>.body.appendChild buttonsDiv
+            <span class="hljs-built_in">document</span>.body.appendChild switchesDiv
+            <span class="hljs-built_in">document</span>.body.appendChild lampsDiv
+            <span class="hljs-built_in">document</span>.body.appendChild ledsDiv
+            <span class="hljs-built_in">document</span>.body.appendChild watchingDiv
+            <span class="hljs-built_in">document</span>.body.appendChild start
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> exports? <span class="hljs-comment"># De code wordt in de console uitgevoert</span>
+        run()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <h1 id="de-schakeling">De schakeling</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>De schakeling zal worden gedefiniërd binnen de <code>init</code> functie.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">init</span> = -&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>De schakeling bestaat uit de volgende componenten:</p>
+<ul>
+<li>Invoer</li>
+<li>Instellen</li>
+<li>Vergelijken</li>
+<li>Uitvoer</li>
+</ul>
+<h2 id="invoer">Invoer</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>De invoer bestaat uit de nummers 0-9, een reset- en clear-knop en een
+ mode switch.
+De mode knop zal alleen toegankelijk zijn voor de operator van de schakeling.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    button_0 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_0"</span>, <span class="hljs-string">"0"</span>
+    button_1 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_1"</span>, <span class="hljs-string">"1"</span>
+    button_2 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_2"</span>, <span class="hljs-string">"2"</span>
+    button_3 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_3"</span>, <span class="hljs-string">"3"</span>
+    button_4 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_4"</span>, <span class="hljs-string">"4"</span>
+    button_5 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_5"</span>, <span class="hljs-string">"5"</span>
+    button_6 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_6"</span>, <span class="hljs-string">"6"</span>
+    button_7 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_7"</span>, <span class="hljs-string">"7"</span>
+    button_8 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_8"</span>, <span class="hljs-string">"8"</span>
+    button_9 = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_9"</span>, <span class="hljs-string">"9"</span>
+    button_reset = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_reset"</span>, <span class="hljs-string">"RESET"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>button_clear werkt niet,
+de pulsenteller kan in systematic n.m.l. niet terugtellen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    button_clear = <span class="hljs-keyword">new</span> Button <span class="hljs-string">"button_clear"</span>, <span class="hljs-string">"CLEAR"</span>
+    switch_mode = <span class="hljs-keyword">new</span> Switch <span class="hljs-string">"switch_mode"</span>, <span class="hljs-string">"MODE"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>De nummers worden omgezet naar een 4 bit binair getal, d.m.v. OF poorten.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    input_0 = OR(button_1, button_3, button_5, button_7, button_9)
+              .setName(<span class="hljs-string">"input_0"</span>)
+    input_1 = OR(button_2, button_3, button_6, button_7)
+              .setName(<span class="hljs-string">"input_1"</span>)
+    input_2 = OR(button_4, button_5, button_6, button_7)
+              .setName(<span class="hljs-string">"input_2"</span>)
+    input_3 = OR(button_8, button_9)
+              .setName(<span class="hljs-string">"input_3"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Ook zal er een signaal worden gegenereerd dat aan gaat als een van de
+ nummertoetsen ingedrukt is.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    input_any = OR(button_0, button_1, button_2, button_3, button_4,
+                   button_5, button_6, button_7, button_8, button_9)
+                .setName(<span class="hljs-string">"input_any"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Voor het onthouden van welk getal we op dit moment in aan het voeren zijn
+ zullen we een pulsenteller gebruiken.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    current = <span class="hljs-keyword">new</span> PulseCounter <span class="hljs-string">"current"</span>
+    current.set = AND(NOT(current[<span class="hljs-number">2</span>]), NOT(input_any))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Hier zou de <code>button_clear</code> knop aangesloten worden,
+om de ‘current’ pulsenteller omlaag te laten tellen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    current.reset = button_reset
+    current_0    = AND(NOT(current[<span class="hljs-number">0</span>]), NOT(current[<span class="hljs-number">1</span>]), NOT(current[<span class="hljs-number">2</span>]))
+                 .setName(<span class="hljs-string">"current_0"</span>)
+    current_1    = AND(    current[<span class="hljs-number">0</span>] , NOT(current[<span class="hljs-number">1</span>]), NOT(current[<span class="hljs-number">2</span>]))
+                 .setName(<span class="hljs-string">"current_1"</span>)
+    current_2    = AND(NOT(current[<span class="hljs-number">0</span>]),     current[<span class="hljs-number">1</span>] , NOT(current[<span class="hljs-number">2</span>]))
+                 .setName(<span class="hljs-string">"current_2"</span>)
+    current_3    = AND(    current[<span class="hljs-number">0</span>] ,     current[<span class="hljs-number">1</span>] , NOT(current[<span class="hljs-number">2</span>]))
+                 .setName(<span class="hljs-string">"current_3"</span>)
+    current_done = AND(NOT(current[<span class="hljs-number">0</span>]), NOT(current[<span class="hljs-number">1</span>]),     current[<span class="hljs-number">2</span>] )
+                 .setName(<span class="hljs-string">"current_done"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <h2 id="instellen">Instellen</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Het instelgedeelte van de schakeling is alleen in gebruikt als de mode switch
+ aan staat.
+Voor elk getal zal er een vier-bit geheugencel zijn die de bits van de in te
+ stellen getallen onthouden.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    ref_0 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"ref_0"</span>
+    ref_1 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"ref_1"</span>
+    ref_2 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"ref_2"</span>
+    ref_3 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"ref_3"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Deze geheugencel zal de vier bits van de invoer opslaan, in een andere cel
+ afhankelijk van welk getal op dit moment ingevoerd word. De mode switch moet
+ aan staan (Wat aangeeft dat de gebruiker de getallen wil instellen).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    ref_0[<span class="hljs-number">0</span>].set = AND(current_0, input_0, switch_mode)
+    ref_0[<span class="hljs-number">1</span>].set = AND(current_0, input_1, switch_mode)
+    ref_0[<span class="hljs-number">2</span>].set = AND(current_0, input_2, switch_mode)
+    ref_0[<span class="hljs-number">3</span>].set = AND(current_0, input_3, switch_mode)
+
+    ref_1[<span class="hljs-number">0</span>].set = AND(current_1, input_0, switch_mode)
+    ref_1[<span class="hljs-number">1</span>].set = AND(current_1, input_1, switch_mode)
+    ref_1[<span class="hljs-number">2</span>].set = AND(current_1, input_2, switch_mode)
+    ref_1[<span class="hljs-number">3</span>].set = AND(current_1, input_3, switch_mode)
+
+    ref_2[<span class="hljs-number">0</span>].set = AND(current_2, input_0, switch_mode)
+    ref_2[<span class="hljs-number">1</span>].set = AND(current_2, input_1, switch_mode)
+    ref_2[<span class="hljs-number">2</span>].set = AND(current_2, input_2, switch_mode)
+    ref_2[<span class="hljs-number">3</span>].set = AND(current_2, input_3, switch_mode)
+
+    ref_3[<span class="hljs-number">0</span>].set = AND(current_3, input_0, switch_mode)
+    ref_3[<span class="hljs-number">1</span>].set = AND(current_3, input_1, switch_mode)
+    ref_3[<span class="hljs-number">2</span>].set = AND(current_3, input_2, switch_mode)
+    ref_3[<span class="hljs-number">3</span>].set = AND(current_3, input_3, switch_mode)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Alle referentiecellen zullen worden gereset als de resetknop word ingedrukt
+ terwijl de mode switch aanstaat.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    ref_0[<span class="hljs-number">0</span>].reset = AND(button_reset, switch_mode)
+    ref_0[<span class="hljs-number">1</span>].reset = AND(button_reset, switch_mode)
+    ref_0[<span class="hljs-number">2</span>].reset = AND(button_reset, switch_mode)
+    ref_0[<span class="hljs-number">3</span>].reset = AND(button_reset, switch_mode)
+
+    ref_1[<span class="hljs-number">0</span>].reset = AND(button_reset, switch_mode)
+    ref_1[<span class="hljs-number">1</span>].reset = AND(button_reset, switch_mode)
+    ref_1[<span class="hljs-number">2</span>].reset = AND(button_reset, switch_mode)
+    ref_1[<span class="hljs-number">3</span>].reset = AND(button_reset, switch_mode)
+
+    ref_2[<span class="hljs-number">0</span>].reset = AND(button_reset, switch_mode)
+    ref_2[<span class="hljs-number">1</span>].reset = AND(button_reset, switch_mode)
+    ref_2[<span class="hljs-number">2</span>].reset = AND(button_reset, switch_mode)
+    ref_2[<span class="hljs-number">3</span>].reset = AND(button_reset, switch_mode)
+
+    ref_3[<span class="hljs-number">0</span>].reset = AND(button_reset, switch_mode)
+    ref_3[<span class="hljs-number">1</span>].reset = AND(button_reset, switch_mode)
+    ref_3[<span class="hljs-number">2</span>].reset = AND(button_reset, switch_mode)
+    ref_3[<span class="hljs-number">3</span>].reset = AND(button_reset, switch_mode)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <h2 id="vergelijken">Vergelijken</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>Voor het vergelijken van de getallen zullen we een simpele schakeling ontwerpen
+ die bij de volgende inputs de volgende outputs geeft:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">INPUT 1</th>
+<th style="text-align:center">INPUT 2</th>
+<th style="text-align:center">OUTPUT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>De schakeling zal dus een hoog signaal geven als output als beide inputs
+ hetzelde zijn.
+Voor het maken van deze schakeling zullen we gebruik maken van een
+ geinverteerde XOF poort. De XOF poort geeft immers een hoog signaal als beide
+ inputs verschillend zijn.
+We zullen dit component <code>compare</code> noemen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function">    <span class="hljs-title">compare</span> = <span class="hljs-params">(a, b)</span> -&gt;</span> NOT(XOR(a, b))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>We zullen de input opslaan afhankelijk van welk van de getallen word ingevuld.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    inp_0 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"inp_0"</span>
+    inp_1 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"inp_1"</span>
+    inp_2 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"inp_2"</span>
+    inp_3 = <span class="hljs-keyword">new</span> MemoryCell_4bit <span class="hljs-string">"inp_3"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Deze geheugencellen zullen dus het laatst ingevoerde getal onthouden.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    inp_0[<span class="hljs-number">0</span>].set = AND(current_0, input_0, NOT(switch_mode))
+    inp_0[<span class="hljs-number">1</span>].set = AND(current_0, input_1, NOT(switch_mode))
+    inp_0[<span class="hljs-number">2</span>].set = AND(current_0, input_2, NOT(switch_mode))
+    inp_0[<span class="hljs-number">3</span>].set = AND(current_0, input_3, NOT(switch_mode))
+
+    inp_1[<span class="hljs-number">0</span>].set = AND(current_1, input_0, NOT(switch_mode))
+    inp_1[<span class="hljs-number">1</span>].set = AND(current_1, input_1, NOT(switch_mode))
+    inp_1[<span class="hljs-number">2</span>].set = AND(current_1, input_2, NOT(switch_mode))
+    inp_1[<span class="hljs-number">3</span>].set = AND(current_1, input_3, NOT(switch_mode))
+
+    inp_2[<span class="hljs-number">0</span>].set = AND(current_2, input_0, NOT(switch_mode))
+    inp_2[<span class="hljs-number">1</span>].set = AND(current_2, input_1, NOT(switch_mode))
+    inp_2[<span class="hljs-number">2</span>].set = AND(current_2, input_2, NOT(switch_mode))
+    inp_2[<span class="hljs-number">3</span>].set = AND(current_2, input_3, NOT(switch_mode))
+
+    inp_3[<span class="hljs-number">0</span>].set = AND(current_3, input_0, NOT(switch_mode))
+    inp_3[<span class="hljs-number">1</span>].set = AND(current_3, input_1, NOT(switch_mode))
+    inp_3[<span class="hljs-number">2</span>].set = AND(current_3, input_2, NOT(switch_mode))
+    inp_3[<span class="hljs-number">3</span>].set = AND(current_3, input_3, NOT(switch_mode))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Alle inputcellen zullen worden gereset als de resetknop word ingedrukt terwijl
+ de mode switch niet aanstaat.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    inp_0[<span class="hljs-number">0</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_0[<span class="hljs-number">1</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_0[<span class="hljs-number">2</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_0[<span class="hljs-number">3</span>].reset = AND(button_reset, NOT(switch_mode))
+
+    inp_1[<span class="hljs-number">0</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_1[<span class="hljs-number">1</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_1[<span class="hljs-number">2</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_1[<span class="hljs-number">3</span>].reset = AND(button_reset, NOT(switch_mode))
+
+    inp_2[<span class="hljs-number">0</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_2[<span class="hljs-number">1</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_2[<span class="hljs-number">2</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_2[<span class="hljs-number">3</span>].reset = AND(button_reset, NOT(switch_mode))
+
+    inp_3[<span class="hljs-number">0</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_3[<span class="hljs-number">1</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_3[<span class="hljs-number">2</span>].reset = AND(button_reset, NOT(switch_mode))
+    inp_3[<span class="hljs-number">3</span>].reset = AND(button_reset, NOT(switch_mode))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>We zullen voor elk getal opslaan of alle bits overeen komen.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    correct_0 = AND(
+        compare(inp_0[<span class="hljs-number">0</span>], ref_0[<span class="hljs-number">0</span>]),
+        compare(inp_0[<span class="hljs-number">1</span>], ref_0[<span class="hljs-number">1</span>]),
+        compare(inp_0[<span class="hljs-number">2</span>], ref_0[<span class="hljs-number">2</span>]),
+        compare(inp_0[<span class="hljs-number">3</span>], ref_0[<span class="hljs-number">3</span>]) )
+        .setName(<span class="hljs-string">"correct_0"</span>)
+    correct_1 = AND(
+        compare(inp_1[<span class="hljs-number">0</span>], ref_1[<span class="hljs-number">0</span>]),
+        compare(inp_1[<span class="hljs-number">1</span>], ref_1[<span class="hljs-number">1</span>]),
+        compare(inp_1[<span class="hljs-number">2</span>], ref_1[<span class="hljs-number">2</span>]),
+        compare(inp_1[<span class="hljs-number">3</span>], ref_1[<span class="hljs-number">3</span>]) )
+        .setName(<span class="hljs-string">"correct_1"</span>)
+    correct_2 = AND(
+        compare(inp_2[<span class="hljs-number">0</span>], ref_2[<span class="hljs-number">0</span>]),
+        compare(inp_2[<span class="hljs-number">1</span>], ref_2[<span class="hljs-number">1</span>]),
+        compare(inp_2[<span class="hljs-number">2</span>], ref_2[<span class="hljs-number">2</span>]),
+        compare(inp_2[<span class="hljs-number">3</span>], ref_2[<span class="hljs-number">3</span>]) )
+        .setName(<span class="hljs-string">"correct_2"</span>)
+    correct_3 = AND(
+        compare(inp_3[<span class="hljs-number">0</span>], ref_3[<span class="hljs-number">0</span>]),
+        compare(inp_3[<span class="hljs-number">1</span>], ref_3[<span class="hljs-number">1</span>]),
+        compare(inp_3[<span class="hljs-number">2</span>], ref_3[<span class="hljs-number">2</span>]),
+        compare(inp_3[<span class="hljs-number">3</span>], ref_3[<span class="hljs-number">3</span>]) )
+        .setName(<span class="hljs-string">"correct_3"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <h2 id="uitvoer">Uitvoer</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>Voor de uitvoer van de schakeling zullen we controleren of alle getallen uit de
+ invoer overeen komt met de referentiewaarden, maar alleen als we alle cijfers
+ ingevoerd hebben.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    correct = <span class="hljs-keyword">new</span> LED <span class="hljs-string">"correct"</span>, <span class="hljs-string">"CORRECT"</span>
+    correct.set = AND(correct_0, correct_1, correct_2, correct_3,
+        current_done)
+    incorrect = <span class="hljs-keyword">new</span> LED <span class="hljs-string">"incorrect"</span>, <span class="hljs-string">"INCORRECT"</span>
+    incorrect.set = AND(NAND(correct_0, correct_1, correct_2, correct_3),
+        current_done)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>We zullen voor het gemak alle componenten importeren.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">main</span> = <span class="hljs-params">(imports)</span> -&gt;</span>
+    { button_0
+    , button_1
+    , button_2
+    , button_3
+    , button_4
+    , button_5
+    , button_6
+    , button_7
+    , button_8
+    , button_9
+    , button_reset
+    , button_clear
+    , switch_mode
+    , input_0
+    , input_1
+    , input_2
+    , input_3
+    , input_any
+    , current
+    , current_0
+    , current_1
+    , current_2
+    , current_3
+    , ref_0
+    , ref_1
+    , ref_2
+    , ref_3
+    , inp_0
+    , inp_1
+    , inp_2
+    , inp_3
+    , correct_0
+    , correct_1
+    , correct_2
+    , correct_3
+    , correct
+    , incorrect
+    } = imports</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <p>Om het programma te testen zullen we een korte simulatie defineren.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    press switch_mode, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_1, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_2, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_3, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_4, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press switch_mode, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_reset, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_1, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_2, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_3, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    press button_4, <span class="hljs-number">1</span>
+    simulate <span class="hljs-number">10</span>
+
+    watch current, <span class="hljs-string">"Huidige getal"</span>
+
+    watch inp_0, <span class="hljs-string">"Input Getal 1"</span>
+    watch inp_1, <span class="hljs-string">"Input Getal 2"</span>
+    watch inp_2, <span class="hljs-string">"Input Getal 3"</span>
+    watch inp_3, <span class="hljs-string">"Input Getal 4"</span>
+
+    watch ref_0, <span class="hljs-string">"Referentie Getal 1"</span>
+    watch ref_1, <span class="hljs-string">"Referentie Getal 2"</span>
+    watch ref_2, <span class="hljs-string">"Referentie Getal 3"</span>
+    watch ref_3, <span class="hljs-string">"Referentie Getal 4"</span>
+
+    watch correct
+    watch incorrect
+
+    log()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              <p>Als allerlaatst starten we het programma.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>start()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
