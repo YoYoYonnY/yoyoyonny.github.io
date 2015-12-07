@@ -4,7 +4,7 @@ PO Schakeling
 Voor het openen en controleren van de schakeling voer je de volgende stappen uit:
 
   1. Open schakeling.coffee.
-  2. Open [https://repl.it/languages/coffeescript](De Coffeescript REPL Online Interpreter).
+  2. Open [De Coffeescript REPL Online Interpreter](https://repl.it/languages/coffeescript).
   3. Kopieer de code uit schakeling.coffee naar REPL.
   4. Pas eventueel de test aan door extra commando's toe te voegen.
   5. Druk op RUN.
