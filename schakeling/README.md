@@ -3,6 +3,10 @@ PO Schakeling
 
 Voor het openen en controleren van de schakeling voer je de volgende stappen uit:
 
+  Open [De testpagina](https://yoyoyonny.github.io/schakeling/bin)
+
+of
+
   1. Open schakeling.coffee.
   2. Open [De Coffeescript REPL Online Interpreter](https://repl.it/languages/coffeescript).
   3. Kopieer de code uit schakeling.coffee naar REPL.
