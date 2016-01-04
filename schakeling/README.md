@@ -1,19 +1,17 @@
 PO Schakeling
 =============
 
-Voor het openen van de diavoorstelling [Klik hier](https://docs.google.com/presentation/d/1iz511oMMnfI7oULQouWYtTknblxvZaT-IJXeOTgC53M)
+Voor het openen van de diavoorstelling:
+
+  Open [De diavoorstelling](https://docs.google.com/presentation/d/1iz511oMMnfI7oULQouWYtTknblxvZaT-IJXeOTgC53M)
 
 Voor het openen en controleren van de schakeling voer je de volgende stappen uit:
 
   Open [De testpagina](https://yoyoyonny.github.io/schakeling/bin)
 
-of
+Voor het weergeven van de uitleg
 
-  1. Open schakeling.coffee.
-  2. Open [De Coffeescript REPL Online Interpreter](https://repl.it/languages/coffeescript).
-  3. Kopieer de code uit schakeling.coffee naar REPL.
-  4. Pas eventueel de test aan door extra commando's toe te voegen.
-  5. Druk op RUN.
+  Open [De source](https://github.com/YoYoYonnY/yoyoyonny.github.io/blob/master/schakeling/src/schakeling.litcoffee)
 
 Commando's
 ----------
