@@ -2,6 +2,7 @@ PO Schakeling
 =============
 
 Voor het openen van de diavoorstelling [Klik hier](https://docs.google.com/presentation/d/1iz511oMMnfI7oULQouWYtTknblxvZaT-IJXeOTgC53M)
+
 Voor het openen en controleren van de schakeling voer je de volgende stappen uit:
 
   Open [De testpagina](https://yoyoyonny.github.io/schakeling/bin)
